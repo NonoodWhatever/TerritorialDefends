@@ -1,9 +1,10 @@
 # TerritorialDefends
 Pain
 
-Anyway, Welcome to my programming project game.
+Anyway, Welcome to my programming project game. currently, things do not works properly.
 
 This is from ReadmeThing from actual file game.
+
 This project is a pain when you don't know much about what to go.
 
 Enemy here doesn't spawn in wave and enemy don't go to player directly, I seem to be able to see the solution, 
