@@ -16,7 +16,8 @@ public class PlayerHP : MonoBehaviour
     public void Start()
     {
         currentHealth = MaxHP;
-        Timer = 0;
+        GameInfoForUI.instance.PlayerHPUpdate(currentHealth);
+         Timer = 0;
     }
 
     // Update is called once per frame
@@ -38,14 +39,27 @@ public class PlayerHP : MonoBehaviour
         Tango ouch = other.gameObject.GetComponent<Tango>();
         if (Timer == 0 && currentHealth > 0)
         {
-            if (ouch != null) { currentHealth -= 1; print("ouch"); Timer = SelectedTimer; }
-
-
+            if (ouch != null) 
+            {
+                currentHealth -= 1; 
+                print("ouch"); 
+                Timer = SelectedTimer; 
+                GameInfoForUI.instance.PlayerHPUpdate(currentHealth);
+                if (ouch.isLivingBullet == true)
+                {
+                    ouch.die();
+                }
+            }
+            
+            
         }
         else if (currentHealth == 0)
         {
             print("u ded");
+            GameInfoForUI.instance.SaveInfo();
             Destroy(weapon);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene("GameOver");
         }
         else if (Timer != 0)

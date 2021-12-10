@@ -8,33 +8,34 @@ public class SettingMenu : MonoBehaviour
     public AudioMixer Audio;
     Resolution[] resolutions;
     public Dropdown ResDropdown;
-    private void Start()
-    {
+  private void Start()
+  {
         resolutions = Screen.resolutions;
 
-        ResDropdown.ClearOptions();
+       ResDropdown.ClearOptions();
         List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width && 
-                resolutions[i].height == Screen.currentResolution.height)
+    int currentResolutionIndex = 0;
+      for (int i = 0; i < resolutions.Length; i++)
+    {
+          string option = resolutions[i].width + "x" + resolutions[i].height;
+          options.Add(option);
+        if (resolutions[i].width == Screen.currentResolution.width && 
+               resolutions[i].height == Screen.currentResolution.height)
            {
-                currentResolutionIndex = i;
-            }
-        }
-        ResDropdown.AddOptions(options);
-        ResDropdown.value = currentResolutionIndex;
-        ResDropdown.RefreshShownValue();
-    }
+              currentResolutionIndex = i;
+           }
+       }
+       ResDropdown.AddOptions(options);
+      ResDropdown.value = currentResolutionIndex;
+      ResDropdown.RefreshShownValue();
+   }
 
     public void SetRes (int ResIndex)
     {
         Resolution res = resolutions[ResIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+    //    print(res.width);
+     //   print(res.height);
     }
     public void SetVolume(float volume)
     {

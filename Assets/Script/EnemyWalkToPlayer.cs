@@ -5,13 +5,13 @@ using UnityEngine.AI;
 
 public class EnemyWalkToPlayer : MonoBehaviour
 {
-    [SerializeField]
-    GameObject target;
+ 
+    public GameObject target;
     NavMeshAgent nav;
   //  public int Cooldown = 5;
     bool knockback;
     Vector3 directionKB;
-    
+    public int WalkSpeed;
     public void Start()
     {
         knockback = false;
@@ -19,7 +19,8 @@ public class EnemyWalkToPlayer : MonoBehaviour
     }
 
     public void Update()
-    {
+    {// Hope this works
+       target = GameObject.Find("Player");
         if (knockback)
         {
             nav.velocity = directionKB * 8;
@@ -33,14 +34,14 @@ public class EnemyWalkToPlayer : MonoBehaviour
         knockback = true;
         nav.speed = 10;
         nav.angularSpeed = 0;
-        nav.acceleration = 100;
+        nav.acceleration = 500;
 
         yield return new WaitForSeconds(0.5f);
 
         knockback = false;
-        nav.speed = 7;
+        nav.speed = WalkSpeed;
         nav.angularSpeed = 270;
-        nav.acceleration = 20;
+        nav.acceleration = 25;
     }
 
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 // Credit to thfm
 public class Gun : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Gun : MonoBehaviour
     [Header("Magazine")]
     public GameObject round;
     public int ammunition;
+    public AudioSource NOISE;
+
 
     [Range(0.5f, 20)] public float reloadTime;
 
@@ -45,6 +48,7 @@ public class Gun : MonoBehaviour
     {
         muzzleOffset = GetComponent<Renderer>().bounds.extents.z;
         remainingAmmunition = ammunition;
+        GameInfoForUI.instance.PlayerMaxAmmo(ammunition);
     }
 
     void Update()
@@ -64,6 +68,7 @@ public class Gun : MonoBehaviour
                 {
                     remainingAmmunition = ammunition;
                     shootState = ShootState.Ready;
+                    GameInfoForUI.instance.PlayerAmmoUpdate(remainingAmmunition);
                 }
                 break;
         }
@@ -75,6 +80,7 @@ public class Gun : MonoBehaviour
         // Checks that the gun is ready to shoot
         if (shootState == ShootState.Ready)
         {
+            NOISE.Play();
             for (int i = 0; i < roundsPerShot; i++)
             {
                 // Instantiates the round at the muzzle position
@@ -93,6 +99,7 @@ public class Gun : MonoBehaviour
 
                 Rigidbody rb = spawnedRound.GetComponent<Rigidbody>();
                 rb.velocity = spawnedRound.transform.forward * roundSpeed;
+                
             }
 
             remainingAmmunition--;
@@ -100,6 +107,7 @@ public class Gun : MonoBehaviour
             {
                 nextShootTime = Time.time + (1 / fireRate);
                 shootState = ShootState.Shooting;
+                GameInfoForUI.instance.PlayerAmmoUpdate(remainingAmmunition);
             }
             else
             {

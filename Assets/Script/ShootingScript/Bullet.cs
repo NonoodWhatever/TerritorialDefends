@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float damage;
+    public GameObject Effect;
 
     void OnCollisionEnter(Collision other)
     {
@@ -18,6 +19,7 @@ public class Bullet : MonoBehaviour
             target.Hit(damage);
 
         }
+        Instantiate(Effect, transform.position, transform.rotation);
         Destroy(gameObject); // Deletes the round
     }
    
